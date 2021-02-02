@@ -22,5 +22,17 @@ class DbServices {
             }
         })
     }
+    findbyemail(tableName, email) {
+        return new Promise(async (resolve, reject) => {
+            try {
+                const user = await tableName.findOne({
+                    where: { email: email }
+                })
+                resolve(user)
+            } catch (err) {
+                reject(err)
+            }
+        })
+    }
 }
 module.exports = DbServices

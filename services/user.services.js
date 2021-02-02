@@ -17,10 +17,20 @@ class UserServices {
             }
         })
     }
-    check(phonenumber) {
+    checkphone(phonenumber) {
         return new Promise(async (resolve, reject) => {
             try {
                 const exist = await dbServices.findbyphone(users, phonenumber);
+                resolve(exist)
+            } catch (err) {
+                reject(false)
+            }
+        })
+    }
+    checkemail(email) {
+        return new Promise(async (resolve, reject) => {
+            try {
+                const exist = await dbServices.findbyemail(users, email);
                 resolve(exist)
             } catch (err) {
                 reject(false)
