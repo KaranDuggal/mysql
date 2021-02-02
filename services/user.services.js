@@ -17,6 +17,16 @@ class UserServices {
             }
         })
     }
+    check(phonenumber) {
+        return new Promise(async (resolve, reject) => {
+            try {
+                const exist = await dbServices.findbyphone(users, phonenumber);
+                resolve(exist)
+            } catch (err) {
+                reject(false)
+            }
+        })
+    }
 }
 
 module.exports = UserServices
