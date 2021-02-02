@@ -18,7 +18,8 @@ module.exports = UserController = function () {
                 throw { custom_err_message: "Email Already Exist. please use Another Email" }
             }
             const user = await userServices.createUser(req.body);
-            res.json({ success: true, user: user })
+            const token = await userServices.createUserToken(user)
+            res.json({ success: true, user: user, token: token })
         } catch (err) {
             res.json({ success: false, error: err, message: err.custom_err_message ? err.custom_err_message : "signup failed" })
         }

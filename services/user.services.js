@@ -1,5 +1,5 @@
 const bcrypt = require('bcrypt')
-
+const jwt = require('jsonwebtoken')
 const DbServices = require('./db.services')
 const dbServices = new DbServices()
 const db = require('../models')
@@ -34,6 +34,21 @@ class UserServices {
                 resolve(exist)
             } catch (err) {
                 reject(false)
+            }
+        })
+    }
+    createUserToken(data) {
+        return new Promise(async (resolve, reject) => {
+            try {
+                const token = jwt.sign({
+                    email: data.email,
+                    phonenumber: data.phonenumber,
+                    role: data.role
+                }, "jwtSecret", { expiresIn: '24h' })
+
+                resolve(token);
+            } catch (err) {
+                reject(err);
             }
         })
     }
