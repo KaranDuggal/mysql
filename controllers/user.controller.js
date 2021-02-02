@@ -17,7 +17,6 @@ module.exports = UserController = function () {
                     custom_err_message: "Phone Number Already Exist. please use Another Number"
                 }
             }
-            console.log('checkPhoneNoExist:', checkPhoneNoExist)
             const user = await userServices.createUser(req.body);
             res.json({
                 success: true,
