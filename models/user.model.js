@@ -1,40 +1,36 @@
 module.exports = (sequelize, Sequelize) => {
-    const users = sequelize.define("Users", {
-      firstname: {
-        type: Sequelize.STRING,
-        allowNull:false,
-        len: [2,20], 
+  const users = sequelize.define("Users", {
+    firstname: {
+      type: Sequelize.STRING,
+      allowNull: false,
+    },
+    lastname: {
+      type: Sequelize.STRING,
+      allowNull: false,
+    },
+    phonenumber: {
+      type: Sequelize.INTEGER,
+      allowNull: false,
+      unique: true,
+    },
+    email: {
+      type: Sequelize.STRING,
+      allowNull: false,
+      validate: {
+        isEmail: true
       },
-      lastname: {
-        type: Sequelize.STRING,
-        allowNull:false,
-        len: [2,20], 
-      },
-      phonenumber: {
-        type: Sequelize.INTEGER,
-        allowNull:false,
-        unique: true,
-      },
-      email: {
-        type: Sequelize.STRING,
-        allowNull:false,
-        validate: {
-            isEmail: true
-        },
-        unique: true,
-      },
-      password: {
-        type: Sequelize.STRING,
-        allowNull:false,
-      },
-      role: {
-        type: Sequelize.STRING,
-        isIn:[['admin','seller','buyer']],
-        default:'buyer',
-        allowNull:false,
-      },
-    });
-  
-    return users;
-  };
-  
+      unique: true,
+    },
+    password: {
+      type: Sequelize.STRING,
+      allowNull: false,
+    },
+    role: {
+      type: Sequelize.ENUM('admin', 'seller', 'buyer'),
+      defaultValue: 'buyer',
+      allowNull: false,
+    },
+  });
+
+  return users;
+};
