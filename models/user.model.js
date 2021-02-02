@@ -25,6 +25,9 @@ module.exports = (sequelize, Sequelize) => {
       type: Sequelize.STRING,
       allowNull: false,
     },
+    forgotpasswordtoken: {
+      type: Sequelize.STRING,
+    },
     role: {
       type: Sequelize.ENUM('admin', 'seller', 'buyer'),
       defaultValue: 'buyer',
