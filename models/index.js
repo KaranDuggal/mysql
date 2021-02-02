@@ -1,3 +1,44 @@
+// const dbConfig = require("../config/db.config.js");
+
+const Sequelize = require("sequelize");
+const sequelize = new Sequelize('sequlelizer', 'root', '12345', {
+    // host: dbConfig.HOST,
+    dialect: 'mysql',
+    // operatorsAliases: false,
+
+    pool: {
+        max: 5,
+        min: 0,
+        acquire: 30000,
+        idle: 10000
+    }
+});
+const db = {};
+db.Sequelize = Sequelize;
+db.sequelize = sequelize;
+db.users = require("./user.model")(sequelize, Sequelize);
+module.exports = db;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // const dbconfig = require('../configurations/db.config')
 // const Sequelize = require("sequelize");
 
@@ -32,3 +73,4 @@
 // // db.tutorials = require("./tutorial.model.js")(sequelize, Sequelize);
 
 // module.exports = db;
+
