@@ -34,5 +34,18 @@ class DbServices {
             }
         })
     }
+    updatetoken(tableName, email,token) {
+        return new Promise(async (resolve, reject) => {
+            try {
+                const user = await tableName.update(
+                    { forgotpasswordtoken: token },
+                    { where: { email: email } }
+                )
+                resolve(user)
+            } catch (err) {
+                reject(err)
+            }
+        })
+    }
 }
 module.exports = DbServices

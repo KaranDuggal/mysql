@@ -14,6 +14,13 @@ class ValidatorService {
             password: Joi.string().required(),
             role: Joi.string(),
         });
+        this.schemas.loginSchema = Joi.object({
+            email: Joi.string().required(),
+            password: Joi.string().required(),
+        });
+        this.schemas.forgetpassword = Joi.object({
+            email: Joi.string().required(),
+        });
     }
 }
 module.exports = ValidatorService;

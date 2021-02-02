@@ -1,7 +1,10 @@
+const bcrypt = require('bcrypt')
 const UserServices = require('../services/user.services')
 const userServices = new UserServices();
 const ValidatorService = require('../services/validator.services');
 const validatorService = new ValidatorService();
+const MailServices = require('../services/mail.service');
+const mailService = new MailServices();
 module.exports = UserController = function () {
     this.signup = async (req, res) => {
         try {
@@ -20,6 +23,43 @@ module.exports = UserController = function () {
             const user = await userServices.createUser(req.body);
             const token = await userServices.createUserToken(user)
             res.json({ success: true, user: user, token: token })
+        } catch (err) {
+            res.json({ success: false, error: err, message: err.custom_err_message ? err.custom_err_message : "signup failed" })
+        }
+    }
+    this.login = async (req, res) => {
+        try {
+            const validUser = await validatorService.schemas.loginSchema.validate(req.body);
+            if (validUser.error) {
+                throw { custom_err_message: "Invalid Schema, in ValidatorServices" }
+            }
+            const checkEmailExist = await userServices.checkemail(req.body.email)
+            if (!checkEmailExist) {
+                throw { custom_err_message: "Please Enter Valid Email" }
+            }
+            const verifypassword = await bcrypt.compare(req.body.password, checkEmailExist.dataValues.password,)
+            if (verifypassword === false) {
+                throw { custom_err_message: "Please Enter Valid password" }
+            }
+            const token = await userServices.createUserToken(checkEmailExist.dataValues)
+            res.json({ success: true, user: checkEmailExist.dataValues, token: token })
+        } catch (err) {
+            res.json({ success: false, error: err, message: err.custom_err_message ? err.custom_err_message : "signup failed" })
+        }
+    }
+    this.forgotpasswordmail = async (req, res) => {
+        try {
+            console.log('in forgot password');
+            const validUser = await validatorService.schemas.forgetpassword.validate(req.body);
+            if (validUser.error) {
+                throw { custom_err_message: "Invalid Schema, check in ValidatorServices" }
+            }
+            const checkEmailExist = await userServices.checkemail(req.body.email)
+            if (!checkEmailExist) {
+                throw { custom_err_message: "Please Enter Valid Email" }
+            }
+            const URL = await mailService.forgotpassword(req.body)
+            res.json({ success: true, user: checkEmailExist.dataValues, URL: URL })
         } catch (err) {
             res.json({ success: false, error: err, message: err.custom_err_message ? err.custom_err_message : "signup failed" })
         }
