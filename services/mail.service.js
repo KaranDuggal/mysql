@@ -37,7 +37,33 @@ class MailServices {
                 reject(err)
             }
         })
-
+    }
+    passw_cng_successfully() {
+        return new Promise(async (resolve, reject) => {
+            try {
+                console.log('in mail service');
+                let transporter = nodemailer.createTransport({
+                    host: "smtp.ethereal.email",
+                    port: 587,
+                    secure: false, // true for 465, false for other ports
+                    auth: {
+                        user: 'tyra.turner58@ethereal.email', // generated ethereal user
+                        pass: 'VcqZ5qD9xEcjrhKVcv', // generated ethereal password
+                    },
+                });
+                let info = await transporter.sendMail({
+                    from: '"turner58" tyra.turner58@ethereal.email', // sender address
+                    to: "laverna.tromp@ethereal.email", // list of receivers
+                    subject: "forgot password ✔", // Subject line
+                    text: "text area", // plain text body
+                    html: `Your Password Change Successfully`, // html body
+                });
+                console.log('URL====>>>>>', nodemailer.getTestMessageUrl(info));
+                resolve(nodemailer.getTestMessageUrl(info))
+            } catch (err) {
+                reject(err)
+            }
+        })
     }
 }
 

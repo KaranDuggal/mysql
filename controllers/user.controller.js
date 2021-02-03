@@ -81,7 +81,8 @@ module.exports = UserController = function () {
                 throw { custom_err_message: "Invalid Token Try Again Later" }
             }
             const updateUser = await userServices.updatepassword(checkEmailExist.dataValues.email, req.body.password1)
-            res.json({ success: true, user: updateUser, })
+            const link = await mailService.passw_cng_successfully();
+            res.json({ success: true, user: updateUser, url: link })
         } catch (err) {
             res.json({ success: false, error: err, message: err.custom_err_message ? err.custom_err_message : "signup failed" })
         }
