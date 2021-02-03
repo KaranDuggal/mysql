@@ -51,6 +51,19 @@ class UserServices {
             }
         })
     }
+    updatepassword(email, password) {
+        return new Promise(async (resolve, reject) => {
+            try {
+                console.log('=========in sercices=========');
+                const hashpassword = await bcrypt.hash(password, 10)
+                console.log('hashpassword:', hashpassword)
+                const user = await dbServices.resetpassword(users, email, hashpassword)
+                resolve(user);
+            } catch (err) {
+                reject(err);
+            }
+        })
+    }
 }
 
 module.exports = UserServices

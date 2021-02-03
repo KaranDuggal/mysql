@@ -7,8 +7,8 @@ const logger = require('morgan');
 const sequelize = require('./configurations/db.loader');
 const Users = require('./models/user.model')
 sequelize.sync({
-    logging:console.log,
-    force:true
+    // logging:console.log,
+    // force:true
 })
 .then((result)=>{
     console.log('connection to database is established succesfully');

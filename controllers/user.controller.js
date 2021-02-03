@@ -57,6 +57,7 @@ module.exports = UserController = function () {
                 throw { custom_err_message: "Invalid Schema, check in ValidatorServices" }
             }
             const checkEmailExist = await userServices.checkemail(req.body.email)
+            console.log('checkEmailExist:', checkEmailExist)
             if (!checkEmailExist) {
                 throw { custom_err_message: "Please Enter Valid Email" }
             }
@@ -72,14 +73,20 @@ module.exports = UserController = function () {
                 throw { custom_err_message: "password not match" }
             }
             const email = jwt.decode(req.params.token, "jwtSecret")
-            // if (email.forgotpasswordtoken)
             const checkEmailExist = await userServices.checkemail(email.email)
             if (!checkEmailExist) {
                 throw { custom_err_message: "Please Enter Valid Email" }
             }
+            console.log('req.params.token !== checkEmailExist.dataValues.forgotpasswordtoken:', req.params.token !== checkEmailExist.dataValues.forgotpasswordtoken)
 
+            if (req.params.token !== checkEmailExist.dataValues.forgotpasswordtoken) {
+                // console.log('checkEmailExist.dataValues.forgotpasswordtoken:', checkEmailExist.dataValues.forgotpasswordtoken)
+                // console.log('req.params.token:', req.params.token)
+                throw { custom_err_message: "Invalid Token Try Again Later" }
+            }
+            const updateUser = await userServices.updatepassword(checkEmailExist.dataValues.email, req.body.password1)
             // const URL = await mailService.forgotpassword(req.body)
-            res.json({ success: true, /*user: checkEmailExist.dataValues, URL: URL */ })
+            res.json({ success: true, user: updateUser, })
         } catch (err) {
             res.json({ success: false, error: err, message: err.custom_err_message ? err.custom_err_message : "signup failed" })
         }

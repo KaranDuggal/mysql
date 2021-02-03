@@ -34,11 +34,25 @@ class DbServices {
             }
         })
     }
-    updatetoken(tableName, email,token) {
+    updatetoken(tableName, email, token) {
         return new Promise(async (resolve, reject) => {
             try {
                 const user = await tableName.update(
                     { forgotpasswordtoken: token },
+                    { where: { email: email } }
+                )
+                resolve(user)
+            } catch (err) {
+                reject(err)
+            }
+        })
+    }
+    resetpassword(tableName, email, password) {
+        return new Promise(async (resolve, reject) => {
+            try {
+                console.log('=========in DBsercices=========');
+                const user = await tableName.update(
+                    { password: password, forgotpasswordtoken: null },
                     { where: { email: email } }
                 )
                 resolve(user)
