@@ -50,7 +50,6 @@ class DbServices {
     resetpassword(tableName, email, password) {
         return new Promise(async (resolve, reject) => {
             try {
-                console.log('=========in DBsercices=========');
                 const user = await tableName.update(
                     { password: password, forgotpasswordtoken: null },
                     { where: { email: email } }
