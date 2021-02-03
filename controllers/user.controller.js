@@ -14,18 +14,12 @@ module.exports = UserController = function () {
             if (validUser.error) {
                 throw { custom_err_message: "Invalid Schema, in ValidatorServices" }
             }
-            const checkPhoneNoExist = await userServices.checkphone(req.body.phonenumber)
-            if (checkPhoneNoExist) {
-                throw { custom_err_message: "Phone Number Already Exist. please use Another Number" }
-            }
-            const checkEmailExist = await userServices.checkemail(req.body.email)
-            if (checkEmailExist) {
-                throw { custom_err_message: "Email Already Exist. please use Another Email" }
-            }
             const user = await userServices.createUser(req.body);
             const token = await userServices.createUserToken(user)
             res.json({ success: true, user: user, token: token })
         } catch (err) {
+            if (err.errors[0].path == 'users.phonenumber') { err = "This Phonr Number is Already Exist Use Another Phone Number" }
+            else { if (err.errors[0].path === 'users.email') { err = "This Email is Already Exist Use Another Email" } }
             res.json({ success: false, error: err, message: err.custom_err_message ? err.custom_err_message : "signup failed" })
         }
     }
@@ -57,7 +51,6 @@ module.exports = UserController = function () {
                 throw { custom_err_message: "Invalid Schema, check in ValidatorServices" }
             }
             const checkEmailExist = await userServices.checkemail(req.body.email)
-            console.log('checkEmailExist:', checkEmailExist)
             if (!checkEmailExist) {
                 throw { custom_err_message: "Please Enter Valid Email" }
             }

@@ -12,15 +12,15 @@ const Users = sequelize.define('Users', {
   phonenumber: {
     type: Sequelize.INTEGER,
     allowNull: false,
-    unique: true,
+    unique: true
   },
   email: {
     type: Sequelize.STRING,
     allowNull: false,
     validate: {
-      isEmail: true
+      isEmail: true,
     },
-    unique: true,
+    unique: true
   },
   password: {
     type: Sequelize.STRING,
