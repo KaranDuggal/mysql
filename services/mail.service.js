@@ -3,8 +3,7 @@ const TokenServices = require('./token.services');
 const tokenServices = new TokenServices();
 const DbServices = require('./db.services');
 const dbServices = new DbServices();
-const db = require('../models')
-const users = db.users;
+const users = require('../models/user.model')
 class MailServices {
     constructor() { }
     forgotpassword(body) {

@@ -2,8 +2,7 @@ const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const DbServices = require('./db.services')
 const dbServices = new DbServices()
-const db = require('../models')
-const users = db.users;
+const users = require('../models/user.model');
 class UserServices {
     constructor() { }
     createUser(body) {

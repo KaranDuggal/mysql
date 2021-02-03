@@ -1,4 +1,6 @@
 const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken')
+
 const UserServices = require('../services/user.services')
 const userServices = new UserServices();
 const ValidatorService = require('../services/validator.services');
@@ -60,6 +62,24 @@ module.exports = UserController = function () {
             }
             const URL = await mailService.forgotpassword(req.body)
             res.json({ success: true, user: checkEmailExist.dataValues, URL: URL })
+        } catch (err) {
+            res.json({ success: false, error: err, message: err.custom_err_message ? err.custom_err_message : "signup failed" })
+        }
+    }
+    this.resetpassword = async (req, res) => {
+        try {
+            if (req.body.password1 !== req.body.password2) {
+                throw { custom_err_message: "password not match" }
+            }
+            const email = jwt.decode(req.params.token, "jwtSecret")
+            // if (email.forgotpasswordtoken)
+            const checkEmailExist = await userServices.checkemail(email.email)
+            if (!checkEmailExist) {
+                throw { custom_err_message: "Please Enter Valid Email" }
+            }
+
+            // const URL = await mailService.forgotpassword(req.body)
+            res.json({ success: true, /*user: checkEmailExist.dataValues, URL: URL */ })
         } catch (err) {
             res.json({ success: false, error: err, message: err.custom_err_message ? err.custom_err_message : "signup failed" })
         }

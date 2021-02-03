@@ -7,5 +7,6 @@ const userController = new UserController();
 router.post('/signup', userController.signup);
 router.post('/login', userController.login);
 router.post('/sendforgotpasswordmail', userController.forgotpasswordmail);
+router.post('/resetpassword/:token', userController.resetpassword);
 
 module.exports = router;

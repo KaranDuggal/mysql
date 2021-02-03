@@ -21,6 +21,10 @@ class ValidatorService {
         this.schemas.forgetpassword = Joi.object({
             email: Joi.string().required(),
         });
+        this.schemas.resetpassword = Joi.object({
+            password1: Joi.string().required(),
+            password2: Joi.string().required(),
+        });
     }
 }
 module.exports = ValidatorService;
