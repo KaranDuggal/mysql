@@ -62,17 +62,11 @@ module.exports = UserController = function () {
     }
     this.resetpassword = async (req, res) => {
         try {
-            if (req.body.password1 !== req.body.password2) {
-                throw { custom_err_message: "password not match" }
-            }
+            if (req.body.password1 !== req.body.password2) {throw { custom_err_message: "password not match" }}
             const email = jwt.decode(req.params.token, "jwtSecret")
             const checkEmailExist = await userServices.checkemail(email.email)
-            if (!checkEmailExist) {
-                throw { custom_err_message: "Please Enter Valid Email" }
-            }
-            if (req.params.token !== checkEmailExist.dataValues.forgotpasswordtoken) {
-                throw { custom_err_message: "Invalid Token Try Again Later" }
-            }
+            if (!checkEmailExist) {throw { custom_err_message: "Please Enter Valid Email" }}
+            if (req.params.token !== checkEmailExist.dataValues.forgotpasswordtoken) {throw { custom_err_message: "Invalid Token Try Again Later" }}
             const updateUser = await userServices.updatepassword(checkEmailExist.dataValues.email, req.body.password1)
             const link = await mailService.passw_cng_successfully();
             res.json({ success: true, user: updateUser, url: link })

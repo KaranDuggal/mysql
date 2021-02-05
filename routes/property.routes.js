@@ -5,5 +5,8 @@ const propertyController = new PropertyController();
 const checkAuth = require('../middleware/check-auth')
 /* GET users listing. */
 router.post('/addproperty',checkAuth, propertyController.addproperty);
+router.get('/getproperty/:id',checkAuth, propertyController.getproperty);
+router.put('/getproperty/:id/edit',checkAuth, propertyController.editproperty);
+router.delete('/getproperty/:id/delete',checkAuth, propertyController.deleteproperty);
 
 module.exports = router;

@@ -34,6 +34,18 @@ class DbServices {
             }
         })
     }
+    findbyid(tableName, id) {
+        return new Promise(async (resolve, reject) => {
+            try {
+                const data = await tableName.findOne({
+                    where: { id: id }
+                })
+                resolve(data)
+            } catch (err) {
+                reject(err)
+            }
+        })
+    }
     updatetoken(tableName, email, token) {
         return new Promise(async (resolve, reject) => {
             try {
@@ -54,6 +66,26 @@ class DbServices {
                     { password: password, forgotpasswordtoken: null },
                     { where: { email: email } }
                 )
+                resolve(user)
+            } catch (err) {
+                reject(err)
+            }
+        })
+    }
+    update(tableName, id, body) {
+        return new Promise(async (resolve, reject) => {
+            try {
+                const user = await tableName.update(body, { where: { id: id } })
+                resolve(user)
+            } catch (err) {
+                reject(err)
+            }
+        })
+    }
+    delete(tableName, id) {
+        return new Promise(async (resolve, reject) => {
+            try {
+                const user = await tableName.destroy({ where: { id: id } })
                 resolve(user)
             } catch (err) {
                 reject(err)
