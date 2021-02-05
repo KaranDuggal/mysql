@@ -6,15 +6,15 @@ const logger = require('morgan');
 // -------- Database config --------------
 const sequelize = require('./configurations/db.loader');
 const Users = require('./models/user.model')
+const Property = require('./models/property.model')
+Users.hasMany(Property)
 sequelize.sync({
     // logging:console.log,
     // force:true
-})
-.then((result)=>{
+}).then((result) => {
     console.log('connection to database is established succesfully');
-})
-.catch(err=>{
-    console.log('database connection failed',err);
+}).catch(err => {
+    console.log('database connection failed', err);
 })
 
 const app = express();

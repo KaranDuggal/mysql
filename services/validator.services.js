@@ -25,6 +25,15 @@ class ValidatorService {
             password1: Joi.string().required(),
             password2: Joi.string().required(),
         });
+        this.schemas.PropertySchemas = Joi.object({
+            Property_name: Joi.string().required(),
+            price: Joi.number().required(),
+            contrary: Joi.string().required(),
+            state: Joi.string().required(),
+            city: Joi.string().required(),
+            house_number: Joi.string().required(),
+            UserId: Joi.number()
+        });
     }
 }
 module.exports = ValidatorService;
