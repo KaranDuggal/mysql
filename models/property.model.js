@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize')
 const sequelize = require('../configurations/db.loader')
 const Property = sequelize.define('property', {
-    property_name: {
+    Property_name: {
         type: Sequelize.STRING,
         allowNull: false,
     },

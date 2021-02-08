@@ -7,9 +7,7 @@ const logger = require('morgan');
 const sequelize = require('./configurations/db.loader');
 const Users = require('./models/user.model')
 const Property = require('./models/property.model')
-const PropertyDetails = require('./models/propertydetails.model')
 Users.hasMany(Property)
-Property.hasMany(PropertyDetails)
 sequelize.sync({
     // logging:console.log,
     // force:true
