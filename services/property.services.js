@@ -1,12 +1,16 @@
 const DbServices = require('./db.services')
 const dbServices = new DbServices();
 const Property = require('../models/property.model')
+const PropertyDetails = require('../models/propertydetails.model')
 class PropertyServices {
     constructor() { }
     addproperty(body) {
         return new Promise(async (resolve, reject) => {
             try {
-                const property = await dbServices.create(Property,body)
+                const property = await dbServices.create(Property,body.property)
+                console.log('property:', property)
+                body.property_details.propertyId = property.dataValues.id
+                const propertyDetails = await dbServices.create(PropertyDetails,body.property_details)
                 resolve(true)
             } catch (err) {
                 reject(err)

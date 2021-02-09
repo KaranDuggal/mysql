@@ -6,7 +6,7 @@ const PropertyDetails = sequelize.define('propertydetails', {
         allowNull: false,
     },
     type: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.STRING,
         allowNull: false,
     },
     levels: {
@@ -18,7 +18,11 @@ const PropertyDetails = sequelize.define('propertydetails', {
         allowNull: false,
     },
     days_active: {
-        type: Sequelize.STRING,
+        type: Sequelize.INTEGER,
+        allowNull: false,
+    },
+    taxes: {
+        type: Sequelize.INTEGER,
         allowNull: false,
     },
     laundry_level: {

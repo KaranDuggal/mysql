@@ -5,9 +5,13 @@ const propertyServices = new PropertyServices();
 module.exports = PropertyController = function () {
     this.addproperty = async (req, res) => {
         try {
-            req.body.UserId = req.user.dataValues.id
-            const validProperty = await validatorService.schemas.PropertySchemas.validate(req.body);
-            if (validProperty.error) { throw { custom_err_message: "Invalid Schema, in ValidatorServices", error } }
+            console.log('====================================================================');
+            console.log(req.body);
+            console.log('====================================================================');
+
+            // req.body.UserId = req.user.dataValues.id
+            // const validProperty = await validatorService.schemas.PropertySchemas.validate(req.body);
+            // if (validProperty.error) { throw { custom_err_message: "Invalid Schema, in ValidatorServices", error } }
             const property = await propertyServices.addproperty(req.body)
             res.json({
                 success: true,
