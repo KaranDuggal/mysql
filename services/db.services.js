@@ -95,6 +95,7 @@ class DbServices {
     delete(tableName, id) {
         return new Promise(async (resolve, reject) => {
             try {
+                console.log('in db services');
                 const user = await tableName.destroy({ where: { id: id } })
                 resolve(user)
             } catch (err) {

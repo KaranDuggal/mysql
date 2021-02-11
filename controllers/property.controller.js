@@ -5,10 +5,6 @@ const propertyServices = new PropertyServices();
 module.exports = PropertyController = function () {
     this.addproperty = async (req, res) => {
         try {
-            // console.log('====================================================================');
-            // console.log(req.body);
-            // console.log('====================================================================');
-
             // req.body.UserId = req.user.dataValues.id
             // const validProperty = await validatorService.schemas.PropertySchemas.validate(req.body);
             // if (validProperty.error) { throw { custom_err_message: "Invalid Schema, in ValidatorServices", error } }
@@ -27,6 +23,7 @@ module.exports = PropertyController = function () {
     this.getproperty = async (req, res) => {
         try {
             const property = await propertyServices.getpropertybyid(req.params.id)
+            // const property = await propertyServices.getpropertybyid(req.params.id)
             res.json({
                 success: true,
                 property: property
@@ -61,10 +58,9 @@ module.exports = PropertyController = function () {
     }
     this.deleteproperty = async (req, res) => {
         try {
-            const property = await propertyServices.getpropertybyid(req.params.id)
-            if (!property) { throw { custom_err_message: "This Property not exist" } }
-            if (req.user.id !== property.dataValues.id) { throw { custom_err_message: "You are not able to delete another person post" } }
-            const deleteProperty = await propertyServices.deletepropertybyid(req.params.id)
+            // if (!property) { throw { custom_err_message: "This Property not exist" } }
+            // if (req.user.id !== property.dataValues.id) { throw { custom_err_message: "You are not able to delete another person post" } }
+            const deleteProperty = await propertyServices.deletepropertybyid(req.params.id, property)
             res.json({
                 success: true,
                 property: deleteProperty
@@ -76,4 +72,16 @@ module.exports = PropertyController = function () {
             })
         }
     }
+    this.uploadimage = async (req, res) => {
+        try {
+            const uploaded = await propertyServices.uploadImage(req, res)
+            res.json({success:true})
+        } catch (err) {
+            res.json({
+                success: false,
+                error: err
+            })
+        }
+    }
+    
 }
