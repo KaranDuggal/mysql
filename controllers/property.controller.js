@@ -5,9 +5,9 @@ const propertyServices = new PropertyServices();
 module.exports = PropertyController = function () {
     this.addproperty = async (req, res) => {
         try {
-            console.log('====================================================================');
-            console.log(req.body);
-            console.log('====================================================================');
+            // console.log('====================================================================');
+            // console.log(req.body);
+            // console.log('====================================================================');
 
             // req.body.UserId = req.user.dataValues.id
             // const validProperty = await validatorService.schemas.PropertySchemas.validate(req.body);

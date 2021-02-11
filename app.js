@@ -5,14 +5,18 @@ const logger = require('morgan');
 
 // -------- Database config --------------
 const sequelize = require('./configurations/db.loader');
-const Users = require('./models/user.model')
-const Property = require('./models/property.model')
-const PropertyDetails = require('./models/propertydetails.model')
-Users.hasMany(Property)
-Property.hasMany(PropertyDetails)
+const user = require('./models/user.model')
+const property = require('./models/property.model')
+const property_detail = require('./models/propertydetails.model')
+const PropertyUtilitiesDetail = require('./models/propertyUtilities.model')
+const propertyRoomLayout = require('./models/propertyRoomLayout.model')
+user.hasMany(property)
+property.hasMany(property_detail)
+property.hasMany(propertyRoomLayout)
+property.hasMany(PropertyUtilitiesDetail)
 sequelize.sync({
-    // logging:console.log,
-    // force:true
+    logging:console.log,
+    force:true
 }).then((result) => {
     console.log('connection to database is established succesfully');
 }).catch(err => {

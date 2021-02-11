@@ -10,6 +10,16 @@ class DbServices {
             }
         })
     }
+    bulkcreate(tableName, body,id) {
+        return new Promise(async (resolve, reject) => {
+            try {
+                const user = await tableName.bulkCreate(body)
+                resolve(user)
+            } catch (err) {
+                reject(err)
+            }
+        })
+    }
     findbyphone(tableName, number) {
         return new Promise(async (resolve, reject) => {
             try {
